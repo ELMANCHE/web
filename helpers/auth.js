@@ -1,30 +1,34 @@
 'use strict'
 
-
 var jwt = require('jwt-simple');
 var moment = require('moment');
 
-var{response} = require('express');
-var secret = '@Matina2190';
+var {response} = require('express');
+var secret = 'martina';
 
 function generateToken(user){
     var payload = {
         sub : user._id,
         name : user.email,
-        ist : moment().unix(),
-        exp : moment().add('10','minutes').unix()
+        role : user.role,  // Agregamos el rol aquí
+        iat : moment().unix(),
+        exp : moment().add(2, 'minutes').unix()
     }
 
     return jwt.encode(payload, secret);
 }
 
+
 function validateToken(req, resp, nextStep){
     try{
         var userToken = req.headers.authorization;
-        var cleanToken = user.replace('Bearer ', '');
+        var cleanToken = userToken.replace('Bearer ', '');
         var payload = jwt.decode(cleanToken, secret);
+        
+        console.log(payload); // <-- Verifica si el token tiene "role"
 
-        req.header.userId = payload.sub; // deja recordar quien fue el usuario logueado
+        req.header.userId = payload.sub;
+        req.userRole = payload.role; // rol del usuario autenticado
         nextStep();
     }
     catch(ex){
@@ -32,4 +36,5 @@ function validateToken(req, resp, nextStep){
     }
 }
 
-module.exports = {generateToken, validateToken}
+
+module.exports = { generateToken, validateToken }
