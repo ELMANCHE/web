@@ -5,10 +5,11 @@ var express = require('express');
 var courseController = require ('../controllers/courses');
 
 var routes = express.Router();
+var token = require('../helpers/auth');
 
-routes.post('/api/course',courseController.createCourse);
-routes.put('/api/course/:_id',courseController.editCourse);
-routes.delete('/api/course/:_id',courseController.deleteCourse);
+routes.post('/api/course', token.validateToken,courseController.createCourse); //login
+routes.put('/api/course/:_id',token.validateToken ,courseController.editCourse); // login
+routes.delete('/api/course/:_id', token.validateToken,courseController.deleteCourse);//login
 routes.get('/api/course/:_id',courseController.findCourseByid);
 routes.get('/api/courses',courseController.findAllCourses);
 routes.get('/api/courses/:price',courseController.findCoursesWithPriceEqualsTo);
