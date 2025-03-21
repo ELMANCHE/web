@@ -5,7 +5,7 @@ var moment = require('moment');
 
 var {response} = require('express');
 var secret = 'martina';
-
+// Función para generar tokens JWT
 function generateToken(user){
     var payload = {
         sub : user._id,
@@ -14,11 +14,11 @@ function generateToken(user){
         iat : moment().unix(),
         exp : moment().add(2, 'minutes').unix()
     }
-
+    // Codifica el payload con la clave secreta
     return jwt.encode(payload, secret);
 }
 
-
+// Middleware para validar tokens en solicitudes
 function validateToken(req, resp, nextStep){
     try{
         var userToken = req.headers.authorization;

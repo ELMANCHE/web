@@ -4,6 +4,9 @@ var User = require('../models/users');
 var token = require('../helpers/auth');
 var bcrypt = require("bcryptjs");
 
+
+// Función para crear un nuevo usuario
+// Se encripta la contraseña antes de guardarla en la base de datos
 function createUser(req, resp){
 
     var parameters = req.body;
@@ -26,6 +29,8 @@ function createUser(req, resp){
     );
 }
 
+// Función para iniciar sesión de un usuario
+// Se valida el email y la contraseña, y se genera un token si son correctos
 function loginUser(req, resp){
     var parameters = req.body;
 
