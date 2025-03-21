@@ -25,10 +25,10 @@ async function createProduct(req, res) {
 
         const newProduct = new Product({ name, category, price, stock });
         const savedProduct = await newProduct.save();
-        res.status(200).send({ message: 'Product created successfully', product: savedProduct });
+        res.status(200).send({ message: 'Producto creado correctamente', product: savedProduct });
 
     } catch (error) {
-        res.status(500).send({ message: 'Error creating product', error });
+        res.status(500).send({ message: 'Error al crear producto', error });
     }
 }
 
@@ -112,7 +112,7 @@ async function findProductsByPriceAndName(req, res) {
         const price = parseFloat(req.params.price);
         const name = req.params.name;
 
-        if (isNaN(price) || price < 0) return res.status(400).send({ message: 'Invalid price' });
+        if (isNaN(price) || price < 0) return res.status(400).send({ message: 'Precio invalido' });
 
         const products = await Product.find({
             price: { $gt: price },
@@ -132,7 +132,7 @@ async function findProductsByPriceOrName(req, res) {
         const price = parseFloat(req.params.price);
         const name = req.params.name;
 
-        if (isNaN(price) || price < 0) return res.status(400).send({ message: 'Invalid price' });
+        if (isNaN(price) || price < 0) return res.status(400).send({ message: 'Precio invlado' });
         // Buscar productos que cumplan con al menos una de las condiciones
         const products = await Product.find({
             $or: [

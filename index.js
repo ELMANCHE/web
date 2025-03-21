@@ -2,15 +2,15 @@
 
 var mongoose = require('mongoose');
 var application = require('./application');
-
+// Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/desarrolloweb').then(
     () => {
-        console.log("Database connection succesful. Starting application");
+        console.log("Te conectaste a la BD . Are u ready?");
         application.listen(6542, function(){
-            console.log("Application started");
+            console.log("Que comience el gogoog ");
         });
     },
     err => {
-        console.log("Error when connecting to database. Application not started. " + err);
+        console.log("No te conectaste, algo paso..." + err);
     }
 );
